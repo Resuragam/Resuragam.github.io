@@ -11,7 +11,7 @@
   
   <title>
     
-      Tag 
+      事件--事件流 
       
       
       |
@@ -140,21 +140,130 @@
 
 
 
-  <!-- 标签页 url形式：https://yoursite/tags/ -->
-  <div class="container tag-index">
-    <div>
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li></ul>
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">事件--事件流</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2022-11-10 18:01:37
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/JavaScript/" title="JavaScript">
+                    #JavaScript
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="事件——事件流"><a href="#事件——事件流" class="headerlink" title="事件——事件流"></a>事件——事件流</h1><p><code>JavaScript</code> 与 <code>HTML</code>之间的交互通过<strong>事件</strong>完成，事件代表文档或者浏览器当中某个特别意义的时刻。</p>
+<p>当事件发生时，可以调用<strong>监听器（处理程序）</strong>订阅事件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;alert(&#x27;按钮被点击&#x27;)&quot;</span>&gt;</span></span><br><span class="line">  点我点我</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如上述代码，当按钮发生点击事件时，此时会调用处理程序 <code>alert(&#39;按钮被点击&#39;)</code>订阅事件。</p>
+<h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p><strong>事件流</strong>描述着页面接受事件的顺序。</p>
+<p>如下图所示，当点击 :o:1 时，实际上也点击了​ :o:2。那么 :o:1 与 :o:2的事件触发顺序就是事件流。</p>
+<p><img src="/../../images/JavaScript/%E4%BA%8B%E4%BB%B6/%E4%BA%8B%E4%BB%B6%E6%B5%81.png" alt="事件流"></p>
+<p>事件流主要分为<strong>IE事件流（事件冒泡）</strong>、<strong>事件捕获</strong>和<strong>DOM事件流</strong>。</p>
+<h3 id="事件冒泡"><a href="#事件冒泡" class="headerlink" title="事件冒泡"></a>事件冒泡</h3><p><strong>IE事件流</strong>被称为事件冒泡。是指事件从最里层的元素出发，传播至最外层的文档节点。</p>
+<p>如下述代码，当<code>button</code>元素被<code>click</code>时，<code>click</code>事件会按照 <code>button</code> -&gt; <code>div</code> -&gt; <code>body</code> -&gt; <code>html</code> -&gt; <code>document</code> 的顺序进行传播并且依次触发。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;alert(&#x27;按钮被点击&#x27;)&quot;</span>&gt;</span>点我！<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="事件捕获"><a href="#事件捕获" class="headerlink" title="事件捕获"></a>事件捕获</h3><p><strong>事件捕获</strong>是指从最外层的元素出发，一直触发至最里层的元素节点。</p>
+<p>事件捕获可以在事件到达最终目标之前拦截事件。</p>
+<p>如下述代码所示，此时的 <code>click</code> 事件触发顺序为 <code>document</code>  -&gt; <code>html</code> -&gt; <code>body</code> -&gt; <code>div</code> -&gt; <code>button</code> 。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;alert(&#x27;按钮被点击&#x27;)&quot;</span>&gt;</span>点我！<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="DOM事件流"><a href="#DOM事件流" class="headerlink" title="DOM事件流"></a>DOM事件流</h3><p><strong>DOM2 Event</strong> 规范规定事件流分为三个阶段：<strong>事件捕获</strong> , <strong>到达目标</strong> 和 <strong>事件冒泡</strong> 。</p>
+<p>通常我们规定事件触发属于事件冒泡阶段。</p>
+<p>以上述的代码为例</p>
+<p>事件捕获阶段： <code>document</code>  -&gt; <code>html</code> -&gt; <code>body</code> -&gt; <code>div</code>。</p>
+<p>到达目标：<code>button</code> 。</p>
+<p>事件冒泡： <code>button</code> -&gt; <code>div</code> -&gt; <code>body</code> -&gt; <code>html</code> -&gt; <code>document</code> 。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/11/09/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2022-11-10 18:01:37
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/JavaScript/" title="JavaScript">
+                        #JavaScript
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E2%80%94%E2%80%94%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="toc-text">事件——事件流</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="toc-text">事件流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1"><span class="toc-text">事件冒泡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7"><span class="toc-text">事件捕获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="toc-text">DOM事件流</span></a></li></ol></li></ol></li></ol>
+      
     </div>
   </div>
-  
 
   
+<script src="/js/catalog.js"></script>
 
-  
 
-  
 
-  
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
 
         
 <div class="footer">
@@ -416,12 +525,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + tags + '&url=' + http%3A%2F%2Fexample.com%2Ftags%2Findex.html + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E4%BA%8B%E4%BB%B6--%E4%BA%8B%E4%BB%B6%E6%B5%81 + '&url=' + http%3A%2F%2Fexample.com%2F2022%2F11%2F10%2FJavaScript%2F%25E4%25BA%258B%25E4%25BB%25B6-%25E4%25BA%258B%25E4%25BB%25B6%25E6%25B5%2581%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/tags/index.html" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2022/11/10/JavaScript/%E4%BA%8B%E4%BB%B6-%E4%BA%8B%E4%BB%B6%E6%B5%81/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
