@@ -171,7 +171,9 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="BFC的理解"><a href="#BFC的理解" class="headerlink" title="BFC的理解"></a>BFC的理解</h1><h2 id="BFC的基本概念"><a href="#BFC的基本概念" class="headerlink" title="BFC的基本概念"></a>BFC的基本概念</h2><p><code>BFC</code>是块级格式化上下文，它是页面的一块渲染区域，并且有一套自己的渲染规则。</p>
+        <h1>BFC的理解</h1>
+<h2 id="BFC的基本概念"><a class="header-anchor" href="#BFC的基本概念">¶</a>BFC的基本概念</h2>
+<p><code>BFC</code>是块级格式化上下文，它是页面的一块渲染区域，并且有一套自己的渲染规则。</p>
 <ul>
 <li><code>BFC</code>内部的盒子会在垂直方向上一个个排列布局。</li>
 <li>同一个<code>BFC</code>内部的盒子的<code>margin</code>会发生重叠，与方向无关。</li>
@@ -180,7 +182,8 @@
 <li>计算<code>BFC</code>的高度时，浮动子元素也参与计算。</li>
 <li><code>BFC</code>就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素，反之亦然。</li>
 </ul>
-<h2 id="BFC的触发条件"><a href="#BFC的触发条件" class="headerlink" title="BFC的触发条件"></a>BFC的触发条件</h2><p>触发<code>BFC</code>的条件</p>
+<h2 id="BFC的触发条件"><a class="header-anchor" href="#BFC的触发条件">¶</a>BFC的触发条件</h2>
+<p>触发<code>BFC</code>的条件</p>
 <ul>
 <li>根元素，<code>html</code>元素。</li>
 <li>浮动元素，即<code>float</code>值为<code>left</code>、<code>right</code>。</li>
@@ -188,41 +191,38 @@
 <li><code>display</code>的值为<code>inline-block</code>、<code>inltable-cell</code>、<code>table-caption</code>、<code>table</code>、<code>inline-table</code>、<code>flex</code>、<code>inline-flex</code>、<code>grid</code>、<code>inline-grid</code>。</li>
 <li><code>position</code>的值为<code>absolute</code>或<code>fixed</code>。</li>
 </ul>
-<h2 id="BFC的作用"><a href="#BFC的作用" class="headerlink" title="BFC的作用"></a>BFC的作用</h2><h3 id="①-导致外边距折叠问题"><a href="#①-导致外边距折叠问题" class="headerlink" title="① 导致外边距折叠问题"></a>① 导致外边距折叠问题</h3><p> 外边距折叠（Margin collapsing）也只会发生在属于同一<code>BFC</code>的块级元素之间。 </p>
+<h2 id="BFC的作用"><a class="header-anchor" href="#BFC的作用">¶</a>BFC的作用</h2>
+<h3 id="①-导致外边距折叠问题"><a class="header-anchor" href="#①-导致外边距折叠问题">¶</a>① 导致外边距折叠问题</h3>
+<p>外边距折叠（Margin collapsing）也只会发生在属于同一<code>BFC</code>的块级元素之间。</p>
 <p><strong>HTML</strong></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 <p><strong>css</strong></p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: aqua;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.box2</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: aquamarine;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">20px</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/margin1.png" alt="外边距塌陷"></p>
+<p><img src="../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/margin1.png" alt="外边距塌陷"></p>
 <p>box1元素与box2元素当前处于统一<code>BFC</code>下面，会导致外边距折叠。</p>
-<p>解决办法：**创建一个新的<code>BFC</code>**。</p>
-<p><img src="/../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/margin2.png" alt="1667889710749"></p>
-<h3 id="②-制作两栏布局"><a href="#②-制作两栏布局" class="headerlink" title="② 制作两栏布局"></a>② 制作两栏布局</h3><p><code>BFC</code>的区域不会与浮动的区域重叠。</p>
+<p>解决办法：<strong>创建一个新的<code>BFC</code></strong>。</p>
+<p><img src="../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/margin2.png" alt="1667889710749"></p>
+<h3 id="②-制作两栏布局"><a class="header-anchor" href="#②-制作两栏布局">¶</a>② 制作两栏布局</h3>
+<p><code>BFC</code>的区域不会与浮动的区域重叠。</p>
 <p><strong>HTML</strong></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box1&quot;</span>&gt;</span></span><br><span class="line">    box1</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box2&quot;</span>&gt;</span></span><br><span class="line">    box2</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 <p><strong>CSS</strong></p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box1</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: aquamarine;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box2</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: coral;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/layout.png" alt="1667890527868"></p>
+<p><img src="../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/layout.png" alt="1667890527868"></p>
 <p>box1元素为浮动元素，此时与box2元素会发生重叠。</p>
 <p>此时我们可以把box2元素设置为<code>BFC</code>区域，解决重叠问题。</p>
-<p><img src="/../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/layout2.png" alt="1667890885825"></p>
+<p><img src="../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/layout2.png" alt="1667890885825"></p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box2</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: coral;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="③-清除元素内部浮动"><a href="#③-清除元素内部浮动" class="headerlink" title="③ 清除元素内部浮动"></a>③ 清除元素内部浮动</h3><p><code>BFC</code>会计算浮动元素的高度。</p>
+<h3 id="③-清除元素内部浮动"><a class="header-anchor" href="#③-清除元素内部浮动">¶</a>③ 清除元素内部浮动</h3>
+<p><code>BFC</code>会计算浮动元素的高度。</p>
 <p><strong>HTML</strong></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 <p><strong>css</strong></p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: aqua;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box1</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: aquamarine;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/float1.png" alt="1667886965229"></p>
+<p><img src="../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/float1.png" alt="1667886965229"></p>
 <p>浮动元素会脱离文档流，导致<strong>高度塌陷</strong>。</p>
 <p>解决方法：<strong>创建<code>BFC</code>。</strong></p>
-<p><img src="/../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/float2.png" alt="1667887161942"></p>
+<p><img src="../../images/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/float2.png" alt="1667887161942"></p>
 
       </div>
       
@@ -272,7 +272,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#BFC%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-text">BFC的理解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">BFC的基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC%E7%9A%84%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-text">BFC的触发条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">BFC的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%91%A0-%E5%AF%BC%E8%87%B4%E5%A4%96%E8%BE%B9%E8%B7%9D%E6%8A%98%E5%8F%A0%E9%97%AE%E9%A2%98"><span class="toc-text">① 导致外边距折叠问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%91%A1-%E5%88%B6%E4%BD%9C%E4%B8%A4%E6%A0%8F%E5%B8%83%E5%B1%80"><span class="toc-text">② 制作两栏布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%91%A2-%E6%B8%85%E9%99%A4%E5%85%83%E7%B4%A0%E5%86%85%E9%83%A8%E6%B5%AE%E5%8A%A8"><span class="toc-text">③ 清除元素内部浮动</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">BFC的理解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">BFC的基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC%E7%9A%84%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-text">BFC的触发条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BFC%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">BFC的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%91%A0-%E5%AF%BC%E8%87%B4%E5%A4%96%E8%BE%B9%E8%B7%9D%E6%8A%98%E5%8F%A0%E9%97%AE%E9%A2%98"><span class="toc-text">① 导致外边距折叠问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%91%A1-%E5%88%B6%E4%BD%9C%E4%B8%A4%E6%A0%8F%E5%B8%83%E5%B1%80"><span class="toc-text">② 制作两栏布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%91%A2-%E6%B8%85%E9%99%A4%E5%85%83%E7%B4%A0%E5%86%85%E9%83%A8%E6%B5%AE%E5%8A%A8"><span class="toc-text">③ 清除元素内部浮动</span></a></li></ol></li></ol></li></ol>
       
     </div>
   </div>
