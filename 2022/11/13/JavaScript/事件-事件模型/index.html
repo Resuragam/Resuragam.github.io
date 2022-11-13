@@ -11,7 +11,7 @@
   
   <title>
     
-      事件--事件流 
+      事件--事件模型 
       
       
       |
@@ -151,11 +151,11 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">事件--事件流</div>
+      <div class="post-title">事件--事件模型</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2022-11-10 18:01:37
+          2022-11-13 17:23:54
         </span>
         
               <span class="post-tags">
@@ -171,37 +171,67 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="事件——事件流"><a href="#事件——事件流" class="headerlink" title="事件——事件流"></a>事件——事件流</h1><p><code>JavaScript</code> 与 <code>HTML</code>之间的交互通过<strong>事件</strong>完成，事件代表文档或者浏览器当中某个特别意义的时刻。</p>
-<p>当事件发生时，可以调用<strong>监听器（处理程序）</strong>订阅事件。</p>
+        <h1 id="事件——事件模型"><a href="#事件——事件模型" class="headerlink" title="事件——事件模型"></a>事件——事件模型</h1><h2 id="事件处理程序"><a href="#事件处理程序" class="headerlink" title="事件处理程序"></a>事件处理程序</h2><p>事件代表用户或者浏览器执行的某项动作，比如单击、滚动、加载等事件。而响应事件所调用的函数被称为事件处理程序。事件处理程序的名字大多数以<code>on</code>开头，比如 <code>click</code> 事件的处理程序叫做 <code>onclick</code>，而 <code>load</code> 被称为 <code>onLoad</code>。</p>
+<h3 id="HTML-事件处理程序"><a href="#HTML-事件处理程序" class="headerlink" title="HTML 事件处理程序"></a>HTML 事件处理程序</h3><p>特定元素支持的每个事件可以采用事件处理程序的名字以 <strong>HTML属性</strong> 的形式来指定 。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;alert(&#x27;按钮被点击&#x27;)&quot;</span>&gt;</span></span><br><span class="line">  点我点我</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>如上述代码，当按钮发生点击事件时，此时会调用处理程序 <code>alert(&#39;按钮被点击&#39;)</code>订阅事件。</p>
-<h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p><strong>事件流</strong>描述着页面接受事件的顺序。</p>
-<p>如下图所示，当点击 :o:1 时，实际上也点击了​ :o:2。那么 :o:1 与 :o:2的事件触发顺序就是事件流。</p>
-<p><img src="/../../images/JavaScript/%E4%BA%8B%E4%BB%B6/%E4%BA%8B%E4%BB%B6%E6%B5%81.png" alt="事件流"></p>
-<p>事件流主要分为<strong>IE事件流（事件冒泡）</strong>、<strong>事件捕获</strong>和<strong>DOM事件流</strong>。</p>
-<h3 id="事件冒泡"><a href="#事件冒泡" class="headerlink" title="事件冒泡"></a>事件冒泡</h3><p><strong>IE事件流</strong>被称为事件冒泡。是指事件从最里层的元素出发，传播至最外层的文档节点。</p>
-<p>如下述代码，当<code>button</code>元素被<code>click</code>时，<code>click</code>事件会按照 <code>button</code> -&gt; <code>div</code> -&gt; <code>body</code> -&gt; <code>html</code> -&gt; <code>document</code> 的顺序进行传播并且依次触发。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;alert(&#x27;按钮被点击&#x27;)&quot;</span>&gt;</span>点我！<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="DOM0-事件处理程序"><a href="#DOM0-事件处理程序" class="headerlink" title="DOM0 事件处理程序"></a>DOM0 事件处理程序</h3><p>在 <code>JavaScript</code> 中指定事件处理程序的传统方式是把一个函数赋值给一个元素的事件处理程序属性。</p>
+<p><strong>HTML</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;btn&quot;</span>&gt;</span></span><br><span class="line">    点我</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="事件捕获"><a href="#事件捕获" class="headerlink" title="事件捕获"></a>事件捕获</h3><p><strong>事件捕获</strong>是指从最外层的元素出发，一直触发至最里层的元素节点。</p>
-<p>事件捕获可以在事件到达最终目标之前拦截事件。</p>
-<p>如下述代码所示，此时的 <code>click</code> 事件触发顺序为 <code>document</code>  -&gt; <code>html</code> -&gt; <code>body</code> -&gt; <code>div</code> -&gt; <code>button</code> 。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;alert(&#x27;按钮被点击&#x27;)&quot;</span>&gt;</span>点我！<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>JavaScript</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> btn = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;btn&#x27;</span>)</span><br><span class="line">btn.<span class="property">onclick</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&#x27;DOM0事件处理程序&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="DOM事件流"><a href="#DOM事件流" class="headerlink" title="DOM事件流"></a>DOM事件流</h3><p><strong>DOM2 Event</strong> 规范规定事件流分为三个阶段：<strong>事件捕获</strong> , <strong>到达目标</strong> 和 <strong>事件冒泡</strong> 。</p>
-<p>通常我们规定事件触发属于事件冒泡阶段。</p>
-<p>以上述的代码为例</p>
-<p>事件捕获阶段： <code>document</code>  -&gt; <code>html</code> -&gt; <code>body</code> -&gt; <code>div</code>。</p>
-<p>到达目标：<code>button</code> 。</p>
-<p>事件冒泡： <code>button</code> -&gt; <code>div</code> -&gt; <code>body</code> -&gt; <code>html</code> -&gt; <code>document</code> 。</p>
+<p><img src="/../../images/JavaScript/%E4%BA%8B%E4%BB%B6/DOM0.png" alt="DOM0事件处理程序"></p>
+<p>将事件处理程序属性设置为<code>null</code>，就可以清楚事件处理程序。</p>
+<h3 id="DOM2-事件处理程序"><a href="#DOM2-事件处理程序" class="headerlink" title="DOM2 事件处理程序"></a>DOM2 事件处理程序</h3><p>通过 <code>addEventListener</code> 和 <code>removeEventListener</code> 两个方法增加或删除事件处理程序。</p>
+<p>两个方法都接受三个参数，分别是事件名称，事件处理程序和一个布尔值。</p>
+<p>如果为 <code>true</code> ，表示在捕获阶段调用事件处理程序，如果为 <code>false</code> ，表示在冒泡阶段调用事件处理程序，默认为<code>false</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> btn = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;btn&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> handle = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&#x27;DOM2事件处理程序&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">btn.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, handle)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../../images/JavaScript/%E4%BA%8B%E4%BB%B6/dom2.png" alt="DOM2事件处理程序"></p>
+<p>调用<code>removeEventListener</code> 方法移除事件处理程序。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    btn.<span class="title function_">removeEventListener</span>(<span class="string">&#x27;click&#x27;</span>, handle)</span><br><span class="line">&#125;, <span class="number">5000</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../../images/JavaScript/%E4%BA%8B%E4%BB%B6/dom2-remove.png" alt="DOM2事件处理程序-移除"></p>
+<h3 id="IE事件处理程序"><a href="#IE事件处理程序" class="headerlink" title="IE事件处理程序"></a>IE事件处理程序</h3><p>通过 <code>attachEvent</code> 和 <code>detachEvent</code> 两个方法增加或删除事件处理程序。</p>
+<p>两个方法都接受两个参数，分别是事件处理程序名称，事件处理程序。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> btn = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;btn&#x27;</span>)</span><br><span class="line">btn.<span class="title function_">attachEvent</span>(<span class="string">&#x27;onclick&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&#x27;IE事件处理程序&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="事件模型"><a href="#事件模型" class="headerlink" title="事件模型"></a>事件模型</h2><h3 id="DOM0-级模型"><a href="#DOM0-级模型" class="headerlink" title="DOM0 级模型"></a>DOM0 级模型</h3><p>在原始事件模型当中，没有事件流的概念，因此没有事件的捕获与冒泡。通过元素的属性值来绑定监听函数。</p>
+<p>① <code>HTML</code>元素指定元素值</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;alert(&#x27;按钮被点击&#x27;)&quot;</span>&gt;</span></span><br><span class="line">    点我点我</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>② <code>JavaScript</code> 指定属性值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> btn = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;btn&#x27;</span>)</span><br><span class="line">btn.<span class="property">onclick</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&#x27;DOM0级模型&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>缺点</strong></p>
+<p>① <code>HTML</code> 和 <code>JavaScript</code> 代码耦合，难以维护。</p>
+<p>② 相同事件的处理程序只能唯一，后绑定的处理程序会覆盖之前的处理程序。</p>
+<p>③ 无法使用事件冒泡和委托机制。</p>
+<h3 id="IE事件模型"><a href="#IE事件模型" class="headerlink" title="IE事件模型"></a>IE事件模型</h3><p>IE 事件模型中事件分为两个过程，事件处理阶段和事件冒泡阶段。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> btn = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;btn&#x27;</span>)</span><br><span class="line">btn.<span class="title function_">attachEvent</span>(<span class="string">&#x27;onclick&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&#x27;IE事件处理模型&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点</strong></p>
+<p>① 解决了原始事件模型的三个缺点，可以使用事件冒泡和委托。</p>
+<p><strong>缺点</strong></p>
+<p>① 兼容性较差，只能在IE浏览器当中使用。</p>
+<h3 id="DOM2-级模型"><a href="#DOM2-级模型" class="headerlink" title="DOM2 级模型"></a>DOM2 级模型</h3><p>DOM2 级模型中事件分为三个过程，事件捕获，事件处理阶段和事件冒泡阶段。</p>
+<ul>
+<li>事件捕获：事件被从document一直向下传播到目标元素,在这过程中依次检查经过的节点是否注册了该事件的监听函数，若有则执行。 </li>
+<li>事件处理：事件到达目标元素,执行目标元素的事件处理函数 。</li>
+<li>事件冒泡阶段：事件从目标元素上升一直到达document，同样依次检查经过的节点是否注册了该事件的监听函数，有则执行。</li>
+</ul>
+<p>通过 <code>addEventListener</code> 和 <code>removeEventListener</code> 两个方法增加或删除事件处理程序。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> btn = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;btn&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> handle = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&#x27;DOM2事件处理程序&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">btn.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, handle)</span><br></pre></td></tr></table></figure>
+
 
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2022/11/09/CSS/BFC%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+              <a href="/2022/11/10/JavaScript/%E4%BA%8B%E4%BB%B6-%E4%BA%8B%E4%BB%B6%E6%B5%81/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -210,7 +240,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2022-11-10 18:01:37
+              2022-11-13 17:23:54
             </span>
             
                   <span class="post-tags">
@@ -227,11 +257,6 @@
           </div>
           <div class="post-foot-prev">
             
-              <a href="/2022/11/13/JavaScript/%E4%BA%8B%E4%BB%B6-%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
-            
           </div>
         </div>
       
@@ -244,7 +269,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E2%80%94%E2%80%94%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="toc-text">事件——事件流</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="toc-text">事件流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1"><span class="toc-text">事件冒泡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7"><span class="toc-text">事件捕获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="toc-text">DOM事件流</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E2%80%94%E2%80%94%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B"><span class="toc-text">事件——事件模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-text">事件处理程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-text">HTML 事件处理程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM0-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-text">DOM0 事件处理程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM2-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-text">DOM2 事件处理程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IE%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-text">IE事件处理程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B"><span class="toc-text">事件模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM0-%E7%BA%A7%E6%A8%A1%E5%9E%8B"><span class="toc-text">DOM0 级模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IE%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B"><span class="toc-text">IE事件模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM2-%E7%BA%A7%E6%A8%A1%E5%9E%8B"><span class="toc-text">DOM2 级模型</span></a></li></ol></li></ol></li></ol>
       
     </div>
   </div>
@@ -560,12 +585,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E4%BA%8B%E4%BB%B6--%E4%BA%8B%E4%BB%B6%E6%B5%81 + '&url=' + http%3A%2F%2Fexample.com%2F2022%2F11%2F10%2FJavaScript%2F%25E4%25BA%258B%25E4%25BB%25B6-%25E4%25BA%258B%25E4%25BB%25B6%25E6%25B5%2581%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E4%BA%8B%E4%BB%B6--%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B + '&url=' + http%3A%2F%2Fexample.com%2F2022%2F11%2F13%2FJavaScript%2F%25E4%25BA%258B%25E4%25BB%25B6-%25E4%25BA%258B%25E4%25BB%25B6%25E6%25A8%25A1%25E5%259E%258B%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2022/11/10/JavaScript/%E4%BA%8B%E4%BB%B6-%E4%BA%8B%E4%BB%B6%E6%B5%81/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2022/11/13/JavaScript/%E4%BA%8B%E4%BB%B6-%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
