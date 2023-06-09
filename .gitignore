@@ -1,0 +1,11 @@
+.DS_Store
+.git/
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
+_drafts
+themes/*/_config.yml
+*pre*
