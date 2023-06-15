@@ -103,7 +103,7 @@ theme: hexo-theme-matery
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
     type: git
-    repo: https://github.com/Resuragam/Resuragam.github.io
+    repo: git@github.com:Resuragam/Resuragam.github.io.git
     branch: main
 
 # Search
