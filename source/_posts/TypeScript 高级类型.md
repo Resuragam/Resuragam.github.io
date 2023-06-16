@@ -158,3 +158,108 @@ type Age1 = (typeof MyArray)[number]['age'];
 ```
 
 > 需要牢记的是，**索引类型传入的是一个类型参数，而不是具体的值**，否则会产生错误提示。`Type T cannot be used as an index type.T refers to a value, but is being used as a type here. Did you mean 'typeof T'?`
+
+### 条件类型
+
+条件类型可以帮助我们对类型的输入进行判断，从而输出合适的类型。
+
+```ts
+type num = 1;
+type str = 'hello world';
+
+type isNumber<T> = T extends number ? 'yes' : 'no';
+
+type resultTrue = isNumber<num>;
+// type resultTrue = "yes"
+type resultFalse = isNumber<str>;
+// type resultTrue = "yes"
+```
+
+条件类型类似于 JavaScript 当中的 `condition ? trueExpression : falseExpression` 三元运算符表达式。
+
+我们可以通过 `extends` 关键词判断左侧类型与右侧类型时，是否可以满足分配条件，若满足，得获得 `true` 分支的类型，否则获得 `false` 分支上的类型。
+
+#### 条件类型约束
+
+同时**条件类型判断可以与泛型**一起使用，功能更加强大。
+
+```ts
+type Message<T extends number | string> = T extends number ? number : string;
+function typeMessage<T extends number | string>(message: T): Message<T> {
+    throw 'unimplemented';
+}
+const a = typeMessage('aaaaa');
+// const a: string
+const b = typeMessage(1);
+// const b: number
+const c = typeMessage(Math.random() ? 'hello' : 42);
+// const c: string | number
+```
+
+条件类型也可以帮助我们**缩小类型判断**，使得类型判断更加精确可靠。
+
+```ts
+type MessageOf<T> = T['message'];
+// Type '"message"' cannot be used to index type 'T'.
+```
+
+如上述代码的泛型，我们可以通过条件类型进行约束，帮助泛型 `T` 知道 `message`。
+
+```ts
+type MessageOf<T extends { message: unknown }> = T['message'];
+interface Email {
+    message: string;
+}
+type EmailMessageContent = MessageOf<Email>;
+// type EmailMessageContent = string
+```
+
+我们如果需要对不存在的属性进行判断，可以将 `MessageOf` 修改为 `type MessageOf<T> = T extends { message: unknown } ? T['message'] : never;`
+
+针对`数组`的情况，我们也可以通过条件类型得到数组的元素类型。
+
+```ts
+type Flatten<T> = T extends any[] ? T[number] : T;
+type FlattenStr = Flatten<string[]>;
+// type FlattenStr = string
+```
+
+#### 条件类型推断
+
+我们可以通过条件类型进行类型约束，然后通过 `infer` 关键词进行类型推断，这是一种非常常见的操作。例如上述代码中我们可以通过条件类型在 `true` 分支上使用 `infer` 关键词得到具体类型，而不是通过索引提取相关元素。
+
+```ts
+type FlattenInfer<T> = T extends Array<infer P> ? P : T;
+type FlattenInferStr = Flatten<Array<string | number>>;
+// type FlattenInferStr = string | number
+```
+
+不得不感概 `infer` 关键词的强大，可以类似与一个类型变量参数，不需要关系内部逻辑的实现而可以直接提取类型。我们也可以通过条件类型和 `infer` 提取一个函数最终的返回结果类型。
+
+```ts
+type GetReturnType<T> = T extends (...args: unknown[]) => infer R ? R : never;
+type Num = GetReturnType<() => number>;
+// type Num = number
+type Str = GetReturnType<(x: string) => string>;
+// type Str = string
+type Bools = GetReturnType<(a: boolean, b: boolean) => boolean[]>;
+// type Bools = boolean[]
+```
+
+#### 分布式条件类型
+
+当条件类型作用于一个泛型类型，并且泛型类型是一个联合类型时，会进行分布式判断。
+
+```ts
+type ToArray<T> = T extends any ? T[] : never;
+type StrArrOrNumArr = ToArray<string | number>;
+// type StrArrOrNumArr = string[] | number[];
+```
+
+在执行联合类型的时候，我们会进行分配律进行判断，如果想要阻止这种行为，我们可以通过 `[]` 把 `extend` 一侧的所有关键词括起来。
+
+```ts
+type ToArrayNonDist<T> = [T] extends [any] ? T[] : never;
+type StrArrOrNumArrNonDis = ToArrayNonDist<string | number>;
+// type StrArrOrNumArrNonDis = (string | number)[]
+```
