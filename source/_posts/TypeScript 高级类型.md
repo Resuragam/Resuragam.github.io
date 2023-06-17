@@ -263,3 +263,126 @@ type ToArrayNonDist<T> = [T] extends [any] ? T[] : never;
 type StrArrOrNumArrNonDis = ToArrayNonDist<string | number>;
 // type StrArrOrNumArrNonDis = (string | number)[]
 ```
+
+### 映射类型
+
+映射类型是基于索引类型的语法基础上的类型，用于声明没有提前声明的属性类型。
+
+```ts
+type OnlyBoolsAndHorses = {
+    [key: string]: boolean;
+};
+
+const conforms: OnlyBoolsAndHorses = {
+    del: true,
+    rondeny: false,
+};
+```
+
+映射类型是一种通用类型，使用 `PropertyKey` (通常使用 `keyof` 创建) 的联合来遍历键以创建类型。
+如下面的代码示例， `OptionsFlags` 将 `Features` 类型的所有属性都变成 `boolean` 类型
+
+```ts
+type OptionsFlags<Type> = {
+    [Property in keyof Type]: boolean;
+};
+type Features = {
+    darkMode: () => void;
+    newUserProfile: () => void;
+};
+type FeaturesOptions = OptionsFlags<Features>;
+// type FeaturesOptions = {
+//     darkMode: boolean;
+//     newUserProfile: boolean;
+// }
+```
+
+#### 映射修饰符
+
+映射期间可以通过应用**两个额外的修饰符：`readonly` 和 `?` 来分别影响可变性和可读性**。
+同时也可以**添加 `-` 和 `+` 来删除和添加这些修饰符**，默认为添加。
+
+```ts
+type CreateMutable<Type> = {
+    -readonly [Property in keyof Type]: boolean;
+};
+type LockedAccount = {
+    readonly id: string;
+    readonly name: string;
+};
+
+type UnlockedAccount = CreateMutable<LockedAccount>;
+// type UnlockedAccount = {
+//     id: boolean;
+//     name: boolean;
+// }
+```
+
+```ts
+type Concrete<Type> = {
+    [Property in keyof Type]-?: Type[Property];
+};
+
+type MaybeUser = {
+    id: string;
+    name?: string;
+    age?: number;
+};
+
+type User = Concrete<MaybeUser>;
+// type User = {
+//     id: string;
+//     name: string;
+//     age: number;
+// }
+```
+
+#### 键重映射
+
+键重映射可以通过 `as` 关键词取别名，同时也可以利用模板自变量的方式从先前的属性名称中创建新的属性名称。
+
+```ts
+type Getters<Type> = {
+    [Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property];
+};
+interface PersonMap {
+    name: string;
+    age: number;
+}
+type GettersPersonMap = Getters<PersonMap>;
+// type GettersPersonMap = {
+//     getName: () => string;
+//     getAge: () => number;
+// }
+```
+
+也可以通过条件类型来生成 `never` 来过滤掉键。
+
+```ts
+type RemoveKindFiled<Type> = {
+    [Property in keyof Type as Exclude<Property, 'kind'>]: Type[Property];
+};
+interface Circle {
+    kind: 'circle';
+    radius: number;
+}
+type KindlessCircle = RemoveKindFiled<Circle>;
+// type KindlessCircle = {
+//     radius: number;
+// }
+```
+
+映射类型可以联合任意类型，而不单单只是 `string | number | symbol`。
+
+```ts
+type EventConfig<Event extends { kind: string }> = {
+    [E in Event as E['kind']]: (event: E) => void;
+};
+type SquareEvent = { kind: 'square'; x: number; y: number };
+type CircleEvent = { kind: 'circle'; radius: number };
+type Config = EventConfig<SquareEvent | CircleEvent>;
+// type Config = {
+//     square: (event: SquareEvent) => void;
+//     circle: (event: CircleEvent) => void;
+// }
+```
