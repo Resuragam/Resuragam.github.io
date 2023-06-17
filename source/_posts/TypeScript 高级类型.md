@@ -386,3 +386,66 @@ type Config = EventConfig<SquareEvent | CircleEvent>;
 //     circle: (event: CircleEvent) => void;
 // }
 ```
+
+### 模板字面量类型
+
+模板字面量类型建立在字符串字面量类型之上，并且可以通过联合类型进行扩展。
+通过类似于 JavaScript 当中的模板字符串语法格式，将类型进行拼接生成新的模板字面量类型。
+
+```ts
+type World = 'world';
+
+type Greeting = `hello ${World}`;
+// type Greeting = "hello world"
+```
+
+如果是联合类型，新生成的类型是每个字符串可能联合的成员，类似于交叉相乘。
+
+```ts
+type EmailLocaleIDs = 'welcome_email' | 'email_heading';
+type FooterLocaleIDs = 'footer_title' | 'footer_sendoff';
+type AllLocaleIDs = `${EmailLocaleIDs | FooterLocaleIDs} _id`;
+// type AllLocaleIDs = "welcome_email _id" | "email_heading _id" | "footer_title _id" | "footer_sendoff _id"
+```
+
+#### 内部字符串操作类型
+
+##### `Uppercase<StringType>`
+
+将字符串的每个字符转换为大写版本。
+
+```ts
+type ShoutyGreeting = Uppercase<'hello world'>;
+// type ShoutyGreeting = "HELLO WORLD"
+```
+
+##### `Lowercase<StringType>`
+
+将字符串的每个字符转换为小写版本。
+
+```ts
+type QuietGreeting = Lowercase<'HELLO WORLD'>;
+// type QuietGreeting = "hello world"
+```
+
+##### `Capitalize<StringType>`
+
+将字符串的开头字符转换为大写版本。
+
+```ts
+type CapitalizeLowercaseGreeting = Capitalize<'hello world'>;
+// type CapitalizeLowercaseGreeting = "Hello, world"
+```
+
+##### `Uncapitalize<StringType>`
+
+将字符串的开头字符转换为小写版本。
+
+```ts
+type UncomfortableGreeting = Uncapitalize<'HELLO WORLD'>;
+// type UncomfortableGreeting = "hELLO WORLD"
+```
+
+### 推荐阅读
+
+-   [TypeScript 内置类型](https://www.typescriptlang.org/docs/handbook/2/types-from-types.html)
