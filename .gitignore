@@ -7,5 +7,5 @@ node_modules/
 public/
 .deploy*/
 _drafts
-themes/*/_config.yml
+# themes/*/_config.yml
 *pre*
